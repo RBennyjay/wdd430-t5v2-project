@@ -1,3 +1,6 @@
+"use client";
+
+
 import Link from 'next/link';
 import NavLinks from '@/app/ui/home/nav-links';
 
