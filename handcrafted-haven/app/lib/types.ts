@@ -21,3 +21,8 @@ export interface Product {
     inStock: boolean;
     createdAt: Date;
 }
+
+export interface CartItem extends Product {
+    quantity: number;
+    sellerName: string;
+}

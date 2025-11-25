@@ -22,8 +22,8 @@ export default function MainFooter() {
                         <h4 className="text-base font-body font-bold mb-4">Shop</h4>
                         <ul className="space-y-2 text-sm opacity-90">
                             <li><Link href="/home/products" className="hover:text-[#7E9F8E] transition-colors">All Products</Link></li>
-                            <li><Link href="/new-arrivals" className="hover:text-[#7E9F8E] transition-colors">New Arrivals</Link></li>
-                            <li><Link href="/sale" className="hover:text-[#7E9F8E] transition-colors">Sale</Link></li>
+                            {/* <li><Link href="/new-arrivals" className="hover:text-[#7E9F8E] transition-colors">New Arrivals</Link></li>
+                            <li><Link href="/sale" className="hover:text-[#7E9F8E] transition-colors">Sale</Link></li> */}
                             <li><Link href="/home/sellers" className="hover:text-[#7E9F8E] transition-colors">Our Makers</Link></li>
                         </ul>
                     </div>
@@ -33,9 +33,9 @@ export default function MainFooter() {
                         <h4 className="text-base font-body font-bold mb-4">Support</h4>
                         <ul className="space-y-2 text-sm opacity-90">
                             <li><Link href="/faq" className="hover:text-[#7E9F8E] transition-colors">FAQ</Link></li>
-                            <li><Link href="/shipping" className="hover:text-[#7E9F8E] transition-colors">Shipping & Returns</Link></li>
+                            {/* <li><Link href="/shipping" className="hover:text-[#7E9F8E] transition-colors">Shipping & Returns</Link></li> */}
                             <li><Link href="/contact" className="hover:text-[#7E9F8E] transition-colors">Contact Us</Link></li>
-                            <li><Link href="/accessibility" className="hover:text-[#7E9F8E] transition-colors">Accessibility</Link></li>
+                            {/* <li><Link href="/accessibility" className="hover:text-[#7E9F8E] transition-colors">Accessibility</Link></li> */}
                         </ul>
                     </div>
 
@@ -65,10 +65,10 @@ export default function MainFooter() {
                 {/* Copyright/Legal */}
                 <div className="flex justify-between items-center text-xs opacity-70 pt-4">
                     <p>&copy; {new Date().getFullYear()} Handcraft Co. All rights reserved.</p>
-                    <div className="space-x-4">
+                    {/* <div className="space-x-4">
                         <Link href="/privacy" className="hover:text-[#7E9F8E] transition-colors">Privacy Policy</Link>
                         <Link href="/terms" className="hover:text-[#7E9F8E] transition-colors">Terms of Use</Link>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </footer>

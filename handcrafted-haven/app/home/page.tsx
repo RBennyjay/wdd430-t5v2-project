@@ -72,15 +72,15 @@ export default async function Page() {
                             </div> */}
 
                             <div className="w-full h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
-    {/* Use an <img> tag to display the image */}
-    <img 
-        src={product.image} 
-        alt={product.name} 
-        // These classes ensure the image covers the container nicely
-        className="w-full h-full object-cover"
-        loading="lazy"
-    />
-</div>
+                                {/* Use an <img> tag to display the image */}
+                                <img 
+                                    src={product.image} 
+                                    alt={product.name} 
+                                    // These classes ensure the image covers the container nicely
+                                    className="w-full h-full object-cover"
+                                    loading="lazy"
+                                />
+                            </div>
 
                             <div className="p-4">
                                 {/* Product Name (Serif) */}
