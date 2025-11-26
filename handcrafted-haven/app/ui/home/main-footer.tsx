@@ -50,13 +50,13 @@ export default function MainFooter() {
                                 type="email" 
                                 placeholder="Your email" 
                                 aria-label="Enter email for newsletter"
-                                className="p-2 text-sm rounded-l-md text-[#2C3E50] focus:ring-2 focus:ring-[#7E9F8E] focus:outline-none w-full"
+                                className="p-2 text-sm rounded-l-md bg-[#FAF9F6] text-[#2C3E50] focus:ring-2 focus:ring-[#7E9F8E] focus:outline-none w-full"
                             />
                             <button 
                                 type="submit" 
-                                className="bg-[#7E9F8E] text-white p-2 text-sm rounded-r-md hover:bg-opacity-90 transition-colors"
+                                className="bg-[#7E9F8E] text-white p-2 text-sm rounded-r-md hover:bg-opacity-60 transition-colors cursor-pointer"
                             >
-                                Join
+                                Send
                             </button>
                         </form>
                     </div>

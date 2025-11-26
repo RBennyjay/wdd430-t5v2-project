@@ -106,11 +106,11 @@ export default function CheckoutPage() {
                     Thank you for supporting our artisans. Your order confirmation has been sent to your email.
                 </p>
                 <div className="flex justify-center space-x-4">
-                    <Link href="/" className="bg-sage text-white px-6 py-3 rounded-full hover:bg-opacity-90 transition-colors shadow-lg">
+                    <Link href="/home/products" className="bg-sage text-white px-6 py-3 rounded-full hover:bg-opacity-90 transition-colors shadow-lg">
                         Continue Shopping
                     </Link>
-                    <Link href="/orders" className="border border-navy text-navy px-6 py-3 rounded-full hover:bg-gray-100 transition-colors">
-                        View Order Details
+                    <Link href="/home" className="border border-navy text-navy px-6 py-3 rounded-full hover:bg-gray-100 transition-colors">
+                        Go Home
                     </Link>
                 </div>
             </div>
@@ -150,6 +150,19 @@ export default function CheckoutPage() {
             <h1 className="text-4xl font-serif text-navy mb-10">Secure Checkout</h1>
 
             <div className="flex flex-col lg:flex-row gap-8">
+                {/* === BACK LINK ADDED HERE === */}
+                <div className="mb-6">
+                    <Link 
+                        href="/cart" 
+                        className="text-gray-600 hover:text-[#7E9F8E] transition-colors flex items-center text-sm font-medium"
+                    >
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Back to Cart
+                    </Link>
+                </div>
+                {/* === END BACK LINK === */}
                 
                 {/* 1. Checkout Forms (Left Column) */}
                 <div className="flex-1 lg:max-w-3xl">
