@@ -11,4 +11,5 @@ export type Product = {
     sellerName: string;
     sellerId: number;
     reviewCount: number;
+    category: string; 
 };

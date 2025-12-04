@@ -87,9 +87,9 @@ export default async function Page() {
 </section>
            
             {/* Category Tiles (Placeholder for later implementation) */}
-            <section className="mb-12">
+            {/* <section className="mb-12">
                 <h2 className="text-3xl font-serif text-[#2C3E50] mb-6">Shop by Category</h2>
-                {/* Responsive 12-column grid layout applied here */}
+            
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="aspect-square bg-gray-300 flex items-center justify-center rounded-lg">
                         <p className="text-xl font-sans text-white text-center">Home Decor</p>
@@ -104,7 +104,23 @@ export default async function Page() {
                         <p className="text-xl font-sans text-white text-center">Gifts</p>
                     </div>
                 </div>
-            </section>
+            </section> */}
+
+            <section className="mb-12">
+  <h2 className="text-3xl font-serif text-[#2C3E50] mb-6">Shop by Category</h2>
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    {['Home Decor', 'Jewelry', 'Apparel', 'Gifts'].map((category) => (
+      <a
+        key={category}
+        href={`/home/products?category=${encodeURIComponent(category)}`}
+        className="aspect-square bg-gray-300 flex items-center justify-center rounded-lg hover:bg-gray-400 transition-colors"
+      >
+        <p className="text-xl font-sans text-white text-center">{category}</p>
+      </a>
+    ))}
+  </div>
+</section>
+
 
             {/* Artisan Story Block */}
             <section className="bg-white p-8 md:p-12 border border-gray-100 rounded-lg shadow-md">
