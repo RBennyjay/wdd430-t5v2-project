@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { Product } from '@/app/lib/definitions';
+// Import the client wrapper
+import ReviewsClientWrapper from './ReviewsClientWrapper';
 
 // Reusable Star Rating Component
 const StarRating = ({ rating }: { rating: number }) => {
@@ -111,11 +113,12 @@ const getProductDetails = async (id: string): Promise<Product | null> => {
 //  unwrap params because it's now a Promise
 export default async function ProductDetailPage(props: { params: Promise<{ id: string }> }) {
     const { id } = await props.params;
-
+    const productId = parseInt(id, 10);
     const product = await getProductDetails(id);
 
     if (!product) {
         return (
+            // ... (Product Not Found component) ...
             <div className="max-w-7xl mx-auto py-20 text-center">
                 <h1 className="text-3xl font-serif text-red-600">Product Not Found</h1>
                 <p className="text-gray-600 mt-4">The requested handcrafted treasure could not be located.</p>
@@ -128,7 +131,7 @@ export default async function ProductDetailPage(props: { params: Promise<{ id: s
 
     return (
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
-            {/* === BACK LINK ADDED HERE === */}
+            {/* ... (Back Link and Product Details section - unchanged) ... */}
             <div className="mb-6">
                 <Link 
                     href="/home/products" 
@@ -140,12 +143,10 @@ export default async function ProductDetailPage(props: { params: Promise<{ id: s
                     Back to All Handcrafted Treasures
                 </Link>
             </div>
-            {/* === END BACK LINK === */}
 
             <h1 className="sr-only">{product.name}</h1>
 
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
                 {/* === IMAGE === */}
                 <div className="lg:sticky lg:top-8 self-start">
                     <div className="w-full aspect-square rounded-lg overflow-hidden border border-gray-100 shadow-lg">
@@ -209,34 +210,12 @@ export default async function ProductDetailPage(props: { params: Promise<{ id: s
                 </div>
             </section>
 
-            {/* === REVIEWS === */}
-            
-            <section className="mt-16 pt-10 border-t border-gray-100">
-                <h2 className="text-3xl font-serif text-[#2C3E50] mb-8">Customer Reviews</h2>
-
-                <div className="flex items-center mb-6">
-                    <StarRating rating={product.rating} />
-                    <span className="text-xl text-[#2C3E50] ml-3 font-bold">{product.rating.toFixed(1)} out of 5</span>
-                    <span className="text-gray-500 ml-4">({product.reviewCount} total ratings)</span>
-                </div>
-
-                <button className="bg-[#7E9F8E] text-white py-2 px-6 rounded-md hover:bg-opacity-90 focus:ring-4 focus:ring-[#7E9F8E]">
-                    Write a Review
-                </button>
-
-                <div className="mt-8 space-y-8">
-                    <div className="border-b border-gray-100 pb-6">
-                        <StarRating rating={5} />
-                        <p className="text-md font-bold mt-2">Absolutely stunning quality!</p>
-                        <p className="text-sm text-gray-600 mt-1">This basket exceeded my expectations...</p>
-                    </div>
-                    <div className="pb-6">
-                        <StarRating rating={4} />
-                        <p className="text-md font-bold mt-2">Great value</p>
-                        <p className="text-sm text-gray-600 mt-1">A little smaller than I pictured...</p>
-                    </div>
-                </div>
-            </section>
+            {/* === REVIEWS: Replaced the static section with the Client Wrapper === */}
+            <ReviewsClientWrapper 
+                productId={productId} 
+                productRating={product.rating} 
+                productReviewCount={product.reviewCount} 
+            />
         </div>
     );
 }
