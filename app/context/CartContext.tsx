@@ -6,7 +6,7 @@ import { Product } from '@/app/lib/definitions'; // Import your Product type
 
 // --- Define Types ---
 
-// The CartItem should include the Product details and a quantity
+// The CartItem  include the Product details and a quantity
 export interface CartItem extends Product {
   quantity: number;
 }

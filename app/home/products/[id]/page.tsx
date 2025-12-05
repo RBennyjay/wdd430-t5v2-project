@@ -8,7 +8,7 @@ interface Props {
   params: { id: string };
 }
 
-// NOTE: Ensure your allProducts data structure (or a corresponding fetch function) 
+//  Ensure  allProducts data structure (or a corresponding fetch function) 
 // includes: rating, reviewCount, sellerName, and sellerId
 export default async function ProductDetailPage({ params }: Props) {
   // unwrap params in case it's a Promise (already handled by Next.js, but good practice)

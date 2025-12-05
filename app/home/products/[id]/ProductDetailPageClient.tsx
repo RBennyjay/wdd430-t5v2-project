@@ -8,7 +8,7 @@ import { Product } from '@/app/lib/definitions';
 import StarRating from '@/app/ui/products/star-rating'; 
 import { useCart } from '@/app/context/CartContext'; 
 
-// NOTE: Ensure your 'Product' type in definitions.ts is up to date
+//  Ensure  'Product' type in definitions.ts is up to date
 interface RichProduct extends Product {
   rating: number;
   reviewCount: number;

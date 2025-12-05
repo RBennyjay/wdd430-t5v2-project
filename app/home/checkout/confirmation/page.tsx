@@ -26,12 +26,7 @@ export default function ConfirmationPage() {
             >
               Continue Shopping
             </Link>
-            {/* <Link 
-              href="/home/account" 
-              className="border border-[#7E9F8E] text-[#7E9F8E] py-3 px-8 rounded-lg font-bold hover:bg-gray-100 transition-colors"
-            >
-              View Order Details
-            </Link> */}
+          
             <Link 
               href="/home/checkout/confirmation/order-details" // <-- UPDATED PATH
               className="border border-[#7E9F8E] text-[#7E9F8E] py-3 px-8 rounded-lg font-bold hover:bg-gray-100 transition-colors"
