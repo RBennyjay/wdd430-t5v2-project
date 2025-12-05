@@ -2,10 +2,9 @@
 "use client";
 
 import React from 'react';
+import allProducts from '@/app/lib/products';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/app/ui/products/product-card';
-import { allProducts } from '@/app/lib/products';
-
 
 
 const categories = ['All', 'Home Decor', 'Apparel', 'Jewelry', 'Gifts', 'Kitchen'];

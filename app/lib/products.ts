@@ -51,4 +51,5 @@ const allProducts: Product[] = [
       description: 'Stove-top safe copper kettle with hammered finish.', sellerName: 'Copper Craft', sellerId: 112, category: 'Kitchen' },
 ];
 
-export { allProducts };
+// export { allProducts };
+export default allProducts;  
