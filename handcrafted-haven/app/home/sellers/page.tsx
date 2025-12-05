@@ -1,6 +1,7 @@
 import { mockSellers } from "@/app/lib/mockData";
 import StarRating from "@/app/ui/common/star-rating";
 import Link from "next/link";
+import { createServer } from "@/app/lib/supabase";
 
 export default function SellersPage() {
   return (

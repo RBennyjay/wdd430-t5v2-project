@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import ScrollToTopButton from "@/app/ui/ScrollToTopButton"; // Adjust path as needed
+import ScrollToTopButton from "@/app/ui/ScrollToTopButton";
+import { AuthProvider } from "@/app/context/AuthContext"; 
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,14 +21,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body>
-        <main className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</main>
-        <ScrollToTopButton /> {/* Render the button */}
+        <AuthProvider>
+          <main
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            {children}
+          </main>
+          <ScrollToTopButton />
+        </AuthProvider>
+
       </body>
     </html>
   );

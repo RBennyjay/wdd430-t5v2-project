@@ -4,6 +4,7 @@ import Link from 'next/link';
 // Import Product type from the central definitions file
 import { Product } from '@/app/lib/definitions'; 
 import ProductCard from '@/app/ui/products/product-card';
+import { createServer } from '@/app/lib/supabase';
 
 // --- MOCK DATA (Ensure the image paths point to your files in /public/images/products/) ---
 const allProducts: Product[] = [
@@ -85,6 +86,7 @@ const allProducts: Product[] = [
 // --------------------------------------------------------------------------
 
 export default function ProductsPage() {
+    const supabse = createServer();
     // 1. All product listings - sorted by users (Placeholder for sorting controls)
     // NOTE: In a real app, 'allProducts' would be dynamically fetched and 'sortedProducts' 
     // would be handled by React state (useState) and sorting logic based on user selection.

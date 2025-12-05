@@ -1,14 +1,3 @@
-/**
- * DATABASE SCHEMA DESIGN
- * 
- * This file defines the database structure for the marketplace.
- * Designed for MongoDB but compatible with SQL (PostgreSQL, MySQL).
- */
-
-// ============================================
-// SELLERS COLLECTION/TABLE
-// ============================================
-
 export interface SellerSchema {
   _id: string;                    // Primary Key
   name: string;                   // Indexed
@@ -23,12 +12,6 @@ export interface SellerSchema {
   createdAt: Date;                // Indexed
   updatedAt: Date;
 }
-
-// MongoDB Indexes for Sellers:
-// - { email: 1 } UNIQUE
-// - { name: 1 }
-// - { createdAt: -1 }
-// - { isActive: 1, rating: -1 } COMPOUND INDEX
 
 // ============================================
 // PRODUCTS COLLECTION/TABLE
@@ -51,14 +34,6 @@ export interface ProductSchema {
   updatedAt: Date;
 }
 
-// MongoDB Indexes for Products:
-// - { sellerId: 1, isActive: 1 } COMPOUND INDEX (most important!)
-// - { category: 1, price: 1 } COMPOUND INDEX for filters
-// - { price: 1 } for price range queries
-// - { name: "text", description: "text" } FULL-TEXT SEARCH
-// - { rating: -1, createdAt: -1 } COMPOUND INDEX for sorting
-// - { inStock: 1 }
-
 // ============================================
 // REVIEWS COLLECTION/TABLE
 // ============================================
@@ -75,11 +50,6 @@ export interface ReviewSchema {
   createdAt: Date;                // Indexed
   updatedAt: Date;
 }
-
-// MongoDB Indexes for Reviews:
-// - { productId: 1, createdAt: -1 } COMPOUND INDEX
-// - { sellerId: 1, rating: -1 } COMPOUND INDEX
-// - { userId: 1 }
 
 // ============================================
 // USERS COLLECTION/TABLE (Future implementation)
@@ -98,7 +68,7 @@ export interface UserSchema {
 }
 
 // ============================================
-// ORDERS COLLECTION/TABLE (Future implementation)
+// ORDERS COLLECTION/TABLE 
 // ============================================
 
 export interface OrderSchema {
@@ -157,14 +127,4 @@ interface Address {
  * 5. Get seller's products with filters (FAST):
  *    - Query: { sellerId: "seller_123", category: "Kitchen", inStock: true }
  *    - Index: { sellerId: 1, category: 1, inStock: 1 }
- */
-
-/**
- * ESTIMATED QUERY PERFORMANCE (with proper indexes):
- * 
- * - 10,000 products: < 10ms
- * - 100,000 products: < 50ms
- * - 1,000,000 products: < 200ms
- * 
- * WITHOUT indexes: 500ms - 5000ms for same queries!
  */

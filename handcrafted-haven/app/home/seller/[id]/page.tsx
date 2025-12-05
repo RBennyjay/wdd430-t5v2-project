@@ -9,10 +9,12 @@ import ProductCard from '@/app/ui/cards/product-card';
 import { notFound, useParams } from 'next/navigation';
 import { useState, useMemo } from 'react';
 import { Product } from '@/app/lib/types';
+// import { createServer } from '@/app/lib/supabase';
 
 export default function SellerProfilePage() {
   const params = useParams();
   const id = params.id as string;
+  // const supabse = createServer();
   
   
   // State management
