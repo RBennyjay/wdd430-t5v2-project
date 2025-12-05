@@ -234,9 +234,17 @@ export default function CartPage() {
               </div>
             </div>
 
-            <button className="w-full bg-[#E7BB41] text-[#2C3E50] text-lg font-bold py-3 rounded-lg mt-6 hover:bg-opacity-90 transition-colors focus:ring-4 focus:ring-[#E7BB41] focus:ring-offset-2">
+            {/* <button className="w-full bg-[#E7BB41] text-[#2C3E50] text-lg font-bold py-3 rounded-lg mt-6 hover:bg-opacity-90 transition-colors focus:ring-4 focus:ring-[#E7BB41] focus:ring-offset-2">
               Proceed to Checkout
-            </button>
+            </button> */}
+                      
+           
+<Link 
+  href="/home/checkout" // <-- TARGETS NEW CHECKOUT PAGE
+  className="block text-center w-full bg-[#E7BB41] text-[#2C3E50] text-lg font-bold py-3 rounded-lg mt-6 hover:bg-opacity-90 transition-colors focus:ring-4 focus:ring-[#E7BB41] focus:ring-offset-2"
+>
+  Proceed to Checkout
+</Link>
           </div>
         </div>
 

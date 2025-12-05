@@ -1,3 +1,4 @@
+//ap/home/page.tsx
 import Link from 'next/link';
 
 // Mock data for featured products
