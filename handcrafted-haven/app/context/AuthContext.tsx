@@ -7,6 +7,7 @@ interface UserData {
   id: string;
   email: string;
   role: "buyer" | "seller";
+  name?: string;
 }
 
 interface AuthContextType {
@@ -51,6 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       id: authUser.id,
       email: authUser.email!,
       role: extra?.role || "buyer",
+      name: extra?.name
     });
 
     setLoading(false);
