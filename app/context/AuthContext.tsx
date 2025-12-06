@@ -23,6 +23,7 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  
   const supabase = createClient();
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -30,39 +31,46 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const loadUser = async () => {
     setLoading(true);
 
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    try {
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
 
-    if (!session) {
+      if (!session) {
+
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
+      const authUser = session.user;
+
+      const { data: extra, error: extraError } = await supabase
+        .from("users_extra")
+        .select("*")
+        .eq("user_id", authUser.id)
+        .single();
+
+      const userData = {
+        id: authUser.id,
+        email: authUser.email!,
+        role: (extra?.role || "buyer") as "buyer" | "seller",
+        name: extra?.name,
+      };
+      setUser(userData);
+      setLoading(false);
+    } catch (error) {
       setUser(null);
       setLoading(false);
-      return;
     }
-
-    const authUser = session.user;
-
-    const { data: extra } = await supabase
-      .from("users_extra")
-      .select("*")
-      .eq("user_id", authUser.id)
-      .single();
-
-    setUser({
-      id: authUser.id,
-      email: authUser.email!,
-      role: extra?.role || "buyer",
-      name: extra?.name
-    });
-
-    setLoading(false);
   };
 
   useEffect(() => {
     loadUser();
 
-    //  login/logout 
-    const { data: listener } = supabase.auth.onAuthStateChange(() => {
+    // Listen for auth changes
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       loadUser();
     });
 
@@ -83,4 +91,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  console.log("🎯 useAuth called - Context:", context); // DEBUG
+  return context;
+};

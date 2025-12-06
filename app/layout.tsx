@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ScrollToTopButton from "@/app/ui/ScrollToTopButton";
 import MainHeader from "@/app/ui/home/main-header";
 // import MainFooter from "@/app/ui/home/main-footer";
+import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "@/app/context/CartContext";
 import "./globals.css";
 
@@ -34,19 +35,21 @@ export default function RootLayout({
         // The variables must be defined above this function to be used here
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <CartProvider>
-          {/* HEADER */}
-          {/* <MainHeader /> */}
+        <AuthProvider>  
+          <CartProvider>
+            {/* HEADER */}
+            {/* <MainHeader /> */}
 
-          {/* MAIN CONTENT */}
-          <main className="flex-1">{children}</main>
+            {/* MAIN CONTENT */}
+            <main className="flex-1">{children}</main>
 
-          {/* FOOTER */}
-          {/* <MainFooter /> */}
+            {/* FOOTER */}
+            {/* <MainFooter /> */}
 
-          {/* SCROLL TO TOP BUTTON */}
-          <ScrollToTopButton />
-        </CartProvider>
+            {/* SCROLL TO TOP BUTTON */}
+            <ScrollToTopButton />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
