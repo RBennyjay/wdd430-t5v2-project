@@ -7,8 +7,10 @@ import Link from 'next/link';
 import { Product } from '@/app/lib/definitions';
 import StarRating from '@/app/ui/products/star-rating'; 
 import { useCart } from '@/app/context/CartContext'; 
+// *** NEW: Import the Client Review Wrapper ***
+import ReviewsClientWrapper from './ReviewsClientWrapper'; 
 
-//  Ensure  'Product' type in definitions.ts is up to date
+// Ensure 'Product' type in definitions.ts is up to date
 interface RichProduct extends Product {
   rating: number;
   reviewCount: number;
@@ -72,7 +74,7 @@ export default function ProductDetailPageClient({ product }: Props) {
       <h1 className="sr-only">{product.name}</h1>
 
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* === IMAGE === */}
+        {/* === IMAGE === (No change) */}
         <div className="lg:sticky lg:top-8 self-start">
           <div className="w-full aspect-square rounded-lg overflow-hidden border border-gray-100 shadow-lg">
             <Image 
@@ -90,7 +92,7 @@ export default function ProductDetailPageClient({ product }: Props) {
           </div>
         </div>
 
-        {/* === DETAILS/PURCHASE === */}
+        {/* === DETAILS/PURCHASE === (No change) */}
         <div>
           <h2 className="text-4xl font-serif text-[#2C3E50] mb-2">{product.name}</h2>
 
@@ -134,7 +136,7 @@ export default function ProductDetailPageClient({ product }: Props) {
             <button 
                 onClick={handleAddToCart} 
                 disabled={isAdding || quantity < 1} 
-                className={`w-full text-[#2C3E50] text-lg font-body py-3 rounded-md font-bold transition-colors focus:ring-4 focus:ring-offset-2 
+                className={`cursor-pointer w-full text-[#2C3E50] text-lg font-body py-3 rounded-md font-bold transition-colors focus:ring-4 focus:ring-offset-2 
                     ${isAdding 
                         ? 'bg-gray-400 cursor-not-allowed' 
                         : 'bg-[#E7BB41] hover:bg-opacity-90 focus:ring-[#E7BB41]'
@@ -146,33 +148,13 @@ export default function ProductDetailPageClient({ product }: Props) {
         </div>
       </section>
       
-      {/* === REVIEWS SECTION === */}
-      <section className="mt-16 pt-10 border-t border-gray-100">
-        <h2 className="text-3xl font-serif text-[#2C3E50] mb-8">Customer Reviews</h2>
-        {/* Placeholder review content */}
-        <div className="flex items-center mb-6">
-          <StarRating rating={product.rating} />
-          <span className="text-xl text-[#2C3E50] ml-3 font-bold">{product.rating.toFixed(1)} out of 5</span>
-          <span className="text-gray-500 ml-4">({product.reviewCount} total ratings)</span>
-        </div>
-
-        <button className="bg-[#7E9F8E] text-white py-2 px-6 rounded-md hover:bg-opacity-90 focus:ring-4 focus:ring-[#7E9F8E]">
-            Write a Review
-        </button>
-
-        <div className="mt-8 space-y-8">
-            <div className="border-b border-gray-100 pb-6">
-                <StarRating rating={5} />
-                <p className="text-md font-bold mt-2">Absolutely stunning quality!</p>
-                <p className="text-sm text-gray-600 mt-1">This product exceeded my expectations. Beautifully made.</p>
-            </div>
-            <div className="pb-6">
-                <StarRating rating={4} />
-                <p className="text-md font-bold mt-2">Great value</p>
-                <p className="text-sm text-gray-600 mt-1">A little smaller than I pictured, but excellent craftsmanship.</p>
-            </div>
-        </div>
-      </section>
+      {/* === REVIEWS SECTION: REPLACED STATIC CONTENT WITH CLIENT WRAPPER === */}
+      {/* Pass the necessary initial server data (even though the client component will ultimately fetch live data) */}
+      <ReviewsClientWrapper 
+        productId={product.id} 
+        productRating={product.rating} 
+        productReviewCount={product.reviewCount} 
+      />
     </div>
   );
 }
