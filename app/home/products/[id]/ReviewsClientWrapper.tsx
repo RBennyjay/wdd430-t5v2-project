@@ -10,15 +10,15 @@ import ReviewList, { Review } from './ReviewList';
 
 // --- MOCK DATA AND TYPES ---
 // Define a type for a single review
-export interface Review extends Pick<Product, 'id'> {
-    reviewId: number;
-    userId: number; // Mock user ID (e.g., the current user)
-    userName: string;
-    rating: number; // 1-5
-    title: string;
-    content: string;
-    date: Date;
-}
+// export interface Review extends Pick<Product, 'id'> {
+//     reviewId: number;
+//     userId: number; 
+//     userName: string;
+//     rating: number; // 1-5
+//     title: string;
+//     content: string;
+//     date: Date;
+// }
 
 // Mock reviews, filtered for a specific product ID (using product ID 1 for demonstration)
 const MOCK_REVIEWS_DB: Review[] = [
