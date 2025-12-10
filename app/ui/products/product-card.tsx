@@ -1,5 +1,7 @@
 // app/ui/products/product-card.tsx
 
+"use client";
+
 import Link from 'next/link';
 import StarRating from '@/app/ui/products/star-rating';
 import { Product } from '@/app/lib/definitions';// Import the new shared component

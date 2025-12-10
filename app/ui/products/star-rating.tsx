@@ -1,5 +1,7 @@
 // app/ui/products/star-rating.tsx
 
+"use client";
+
 // Reusable Star Rating component (uses the Interactive/Success color: Mustard #E7BB41)
 const StarRating = ({ rating }: { rating: number }) => {
     const maxStars = 5;
