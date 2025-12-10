@@ -1,16 +1,13 @@
-// app/home/products/page.tsx
 "use client";
 
-export const dynamic = 'force-dynamic'; // ⚡ forces client-side rendering
-
-import React from 'react';
+import React, { Suspense } from 'react';
 import allProducts from '@/app/lib/products';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/app/ui/products/product-card';
 
 const categories = ['All', 'Home Decor', 'Apparel', 'Jewelry', 'Gifts', 'Kitchen'];
 
-export default function ProductsPage() {
+function ProductGrid() {
   const searchParams = useSearchParams();
   const selectedCategory = searchParams.get('category');
 
@@ -19,15 +16,13 @@ export default function ProductsPage() {
     : allProducts;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
-      {/* Page Title */}
+    <>
       <h1 className="text-4xl font-serif text-[#2C3E50] mb-8 border-b-2 border-gray-100 pb-2">
         {selectedCategory && selectedCategory !== 'All'
           ? `${selectedCategory} Products`
           : 'All Handcrafted Treasures'}
       </h1>
 
-      {/* Category Buttons */}
       <div className="flex flex-wrap gap-4 mb-6">
         {categories.map((cat) => (
           <a
@@ -44,19 +39,27 @@ export default function ProductsPage() {
         ))}
       </div>
 
-      {/* No products message */}
       {filteredProducts.length === 0 && (
         <p className="text-center text-gray-500 mb-6">
           No products found in this category.
         </p>
       )}
 
-      {/* Product Grid */}
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </section>
+    </>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+      <Suspense fallback={<p>Loading products...</p>}>
+        <ProductGrid />
+      </Suspense>
     </div>
   );
 }
