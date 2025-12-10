@@ -30,15 +30,22 @@ const config: Config = {
       },
       
       fontFamily: {
-        // Use the 'defaultTheme.fontFamily' property to access the default fonts
-        // Headings typography: Serif-font
-        serif: ['var(--font-heading)', ...defaultTheme.fontFamily.serif],
-        // Body typography: Sans-serif font
-        sans: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
+        // 🚨 UPDATED: Using the actual CSS variables from Next.js Geist setup
+        // Headings typography (Serif-like Monospace): 
+        serif: ['var(--font-geist-mono)', ...defaultTheme.fontFamily.serif],
+        // Body typography (Sans-serif font):
+        sans: ['var(--font-geist-sans)', ...defaultTheme.fontFamily.sans],
+      },
+
+      // 🚨 ADDED: Custom Filter for Hero Image Darkening
+      brightness: {
+        '50': '.50', // Utility class: brightness-50 (equivalent to brightness(50%))
       },
     },
   },
-  plugins: [],
+  // Ensure the 'filters' and 'color-adjust' functionality is enabled if needed
+  // For modern Tailwind (v3+), filters are enabled by default.
+  plugins: [], 
 };
 
 export default config;

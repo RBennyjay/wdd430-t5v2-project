@@ -42,17 +42,31 @@ const StarRating = ({ rating }: { rating: number }) => {
 
 export default async function Page() {
     return (
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8"> 
             
             {/* Hero Section */}
             <section className="relative w-full h-[500px] mb-12">
-                {/* Placeholder div (no Image component) */}
-                <div className="absolute inset-0 bg-gray-600"></div>
                 
-                <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center p-4">
-                    <h1 className="text-4xl md:text-6xl text-white font-serif text-center mb-8">
+                {/* 1. The Image Component - Filtered and Z-indexed */}
+                <Image
+                    src='/images/hero.webp' 
+                    alt="Handcrafted Haven - Beautiful collection of artisanal goods"
+                    fill
+                    sizes="100vw"
+                    className="object-cover z-10 brightness-[.50]" 
+                    priority 
+                />
+                
+                {/* 2. The Text Content (No background color needed) */}
+                {/* CHANGED justify-center to justify-end and added pb-12 */}
+                <div className="absolute inset-0 flex flex-col justify-end items-center p-4 pb-18 z-20"> 
+
+                    {/* Heading */}
+                    {/* <h1 className="text-4xl md:text-6xl text-white font-serif text-center mb-8">
                         Handcrafted Haven
-                    </h1>
+                    </h1> */}
+                    
+                    {/* Shop All Button */}
                     <Link 
                         href="/home/products" 
                         className="bg-[#7E9F8E] text-white text-lg font-body py-3 px-8 rounded-full hover:bg-opacity-90 transition-colors"
@@ -62,6 +76,7 @@ export default async function Page() {
                 </div>
             </section>
 
+ 
             {/* Featured Products */}
             <section className="mb-12">
                 <h2 className="text-3xl font-serif text-[#2C3E50] mb-6">Featured Products</h2>
@@ -121,16 +136,25 @@ export default async function Page() {
     </div>
 </section>
 
-            {/* Artisan Story Block */}
-            <section className="bg-white p-8 md:p-12 border border-gray-100 rounded-lg shadow-md mb-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    {/* Left: Artisan Portrait (Placeholder div) */}
-                    <div className="aspect-square w-full relative rounded-lg overflow-hidden bg-gray-200">
-                        {/* Placeholder div instead of Image component */}
-                        <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-                            Community Image Placeholder
-                        </div>
-                    </div>
+                     
+{/* Artisan Story Block */}
+<section className="bg-white p-8 md:p-12 border border-gray-100 rounded-lg shadow-md mb-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        {/* Left: Artisan Portrait (Image Component) */}
+        <div className="aspect-square w-full relative rounded-lg overflow-hidden bg-gray-200">
+            {/* The actual Next.js Image component */}
+            <Image
+                src='/images/products/community.webp' 
+                alt="Our Community Mission - Artisan working on craft"
+                fill 
+                sizes="(max-width: 768px) 100vw, 50vw" 
+                className="object-cover" 
+                priority 
+            />
+        </div>
+
+
+
 
                     {/* Right: Story and CTA */}
                     <div>
