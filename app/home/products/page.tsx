@@ -1,11 +1,12 @@
 // app/home/products/page.tsx
 "use client";
 
+export const dynamic = 'force-dynamic'; // ⚡ forces client-side rendering
+
 import React from 'react';
 import allProducts from '@/app/lib/products';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/app/ui/products/product-card';
-
 
 const categories = ['All', 'Home Decor', 'Apparel', 'Jewelry', 'Gifts', 'Kitchen'];
 
@@ -26,7 +27,7 @@ export default function ProductsPage() {
           : 'All Handcrafted Treasures'}
       </h1>
 
-      {/* Optional: Category Navigation Buttons */}
+      {/* Category Buttons */}
       <div className="flex flex-wrap gap-4 mb-6">
         {categories.map((cat) => (
           <a
