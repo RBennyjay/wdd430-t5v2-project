@@ -99,7 +99,7 @@ export default function RegisterPage() {
             <input
               type="email"
               required
-              className="w-full p-3 rounded-xl border"
+              className="w-full p-3 rounded-xl border text-black"
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -113,7 +113,7 @@ export default function RegisterPage() {
             <input
               type="password"
               required
-              className="w-full p-3 rounded-xl border"
+              className="w-full p-3 rounded-xl border text-black"
               placeholder="•••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -127,7 +127,7 @@ export default function RegisterPage() {
             <input
               type="password"
               required
-              className="w-full p-3 rounded-xl border"
+              className="w-full p-3 rounded-xl border text-black"
               placeholder="•••••••••"
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
@@ -140,7 +140,7 @@ export default function RegisterPage() {
               I want to register as:
             </label>
             <select
-              className="w-full p-3 rounded-xl border"
+              className="w-full p-3 rounded-xl border text-black"
               value={role}
               onChange={(e) => setRole(e.target.value)}
             >

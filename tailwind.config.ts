@@ -30,14 +30,14 @@ const config: Config = {
       },
       
       fontFamily: {
-        // 🚨 UPDATED: Using the actual CSS variables from Next.js Geist setup
+        //  Using the actual CSS variables from Next.js Geist setup
         // Headings typography (Serif-like Monospace): 
         serif: ['var(--font-geist-mono)', ...defaultTheme.fontFamily.serif],
         // Body typography (Sans-serif font):
         sans: ['var(--font-geist-sans)', ...defaultTheme.fontFamily.sans],
       },
 
-      // 🚨 ADDED: Custom Filter for Hero Image Darkening
+      //  Custom Filter for Hero Image Darkening
       brightness: {
         '50': '.50', // Utility class: brightness-50 (equivalent to brightness(50%))
       },
