@@ -1,17 +1,19 @@
 // app/home/products/[id]/ReviewForm.tsx
-'use client'; // This is also a client component
+'use client'; 
 
 import { useState, useEffect } from 'react';
 import StarRating from '@/app/ui/products/star-rating';
-import { Review } from './ReviewsClientWrapper';
+// FIX: Import Review type directly from ReviewList, not the wrapper
+import { Review } from './ReviewList'; 
 
-// Interactive Star Picker
-const StarPicker = ({ currentRating, setRating }: { currentRating: number, setRating: (r: number) => void }) => {
+
+// Interactive Star Picker (Unchanged)
+const StarPicker = ({ currentRating, setRating, disabled }: { currentRating: number, setRating: (r: number) => void, disabled: boolean }) => {
     const maxStars = 5;
     const mustard = '#E7BB41';
 
     return (
-        <div className="flex items-center space-x-1 cursor-pointer">
+        <div className={`flex items-center space-x-1 ${disabled ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'}`}>
             {Array.from({ length: maxStars }).map((_, index) => {
                 const ratingValue = index + 1;
                 return (
@@ -19,8 +21,9 @@ const StarPicker = ({ currentRating, setRating }: { currentRating: number, setRa
                         key={index}
                         className="text-2xl transition-colors"
                         style={{ color: ratingValue <= currentRating ? mustard : '#ccc' }}
-                        onClick={() => setRating(ratingValue)}
+                        onClick={() => !disabled && setRating(ratingValue)} // Disable click
                         onMouseEnter={(e) => {
+                            if (disabled) return;
                             // Visually indicate hover selection
                             Array.from(e.currentTarget.parentElement?.children || []).forEach((child, i) => {
                                 if (i <= index) {
@@ -31,6 +34,7 @@ const StarPicker = ({ currentRating, setRating }: { currentRating: number, setRa
                             });
                         }}
                         onMouseLeave={(e) => {
+                            if (disabled) return;
                             // Reset to current state
                             Array.from(e.currentTarget.parentElement?.children || []).forEach((child, i) => {
                                 (child as HTMLElement).style.color = (i + 1) <= currentRating ? mustard : '#ccc';
@@ -49,11 +53,13 @@ const StarPicker = ({ currentRating, setRating }: { currentRating: number, setRa
 
 
 interface ReviewFormProps {
-    onSubmit: (reviewData: Omit<Review, 'reviewId' | 'userId' | 'userName' | 'date'>) => void;
+    onSubmit: (reviewData: Omit<Review, 'reviewId' | 'userId' | 'userName' | 'date' | 'id'>) => void;
     editingReview: Review | null;
     currentUserReview: Review | undefined;
     isEditing: boolean;
     onCancelEdit: () => void;
+    // NEW PROP: To disable the form while waiting for API response
+    isSubmitting: boolean; 
 }
 
 export default function ReviewForm({ 
@@ -61,7 +67,8 @@ export default function ReviewForm({
     editingReview, 
     currentUserReview, 
     isEditing, 
-    onCancelEdit 
+    onCancelEdit,
+    isSubmitting // Destructure new prop
 }: ReviewFormProps) {
     const [rating, setRating] = useState(0);
     const [title, setTitle] = useState('');
@@ -69,7 +76,7 @@ export default function ReviewForm({
 
     const isUserBlockedFromNewReview = !isEditing && !!currentUserReview;
 
-    // Effect to populate form fields when starting an edit
+    // Effect to populate form fields when starting an edit (Unchanged)
     useEffect(() => {
         if (editingReview) {
             setRating(editingReview.rating);
@@ -77,9 +84,9 @@ export default function ReviewForm({
             setContent(editingReview.content);
         } else if (isUserBlockedFromNewReview) {
             // If user has a review but isn't editing, show their review's data
-            setRating(currentUserReview.rating);
-            setTitle(currentUserReview.title);
-            setContent(currentUserReview.content);
+            setRating(currentUserReview!.rating); // Using non-null assertion since isUserBlockedFromNewReview checks it
+            setTitle(currentUserReview!.title);
+            setContent(currentUserReview!.content);
         } else {
             // Reset for new review
             setRating(0);
@@ -90,21 +97,30 @@ export default function ReviewForm({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        
+        // Prevent submission if API call is already running
+        if (isSubmitting) return; 
+
         if (rating === 0) {
             alert("Please select a star rating.");
             return;
         }
 
         const reviewData = {
-            id: editingReview?.id || 1, // product id (mocked to 1 for simplicity)
+            // NOTE: We rely on the parent wrapper to inject the correct product ID and user data
             rating,
             title,
             content,
         };
 
         onSubmit(reviewData);
-        onCancelEdit(); // Reset form after submission
+        // Do NOT call onCancelEdit() here. Let the parent component (ReviewsClientWrapper) 
+        // handle state reset ONLY after a successful submission from the API.
+        // onCancelEdit(); 
     };
+    
+    // Combine disable conditions
+    const isFormDisabled = isSubmitting || !title || !content || rating === 0;
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -120,7 +136,7 @@ export default function ReviewForm({
                 <>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Your Rating <span className="text-red-500">*</span></label>
-                        <StarPicker currentRating={rating} setRating={setRating} />
+                        <StarPicker currentRating={rating} setRating={setRating} disabled={isSubmitting} /> {/* Pass disabled state */}
                     </div>
 
                     <div>
@@ -132,7 +148,8 @@ export default function ReviewForm({
                             onChange={(e) => setTitle(e.target.value)}
                             maxLength={100}
                             required
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#7E9F8E]"
+                            disabled={isSubmitting} // Disable input while submitting
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#7E9F8E] disabled:bg-gray-100 disabled:text-gray-500"
                         />
                     </div>
 
@@ -144,23 +161,39 @@ export default function ReviewForm({
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                             required
-                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#7E9F8E]"
+                            disabled={isSubmitting} // Disable textarea while submitting
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#7E9F8E] disabled:bg-gray-100 disabled:text-gray-500"
                         ></textarea>
                     </div>
 
                     <div className="flex space-x-3">
                         <button
                             type="submit"
-                            className={`flex-grow bg-[#E7BB41] text-[#2C3E50] text-lg font-body py-2 rounded-md font-bold hover:bg-opacity-90 transition-colors focus:ring-4 focus:ring-[#E7BB41] cursor-pointer focus:ring-offset-2 ${!title || !content || rating === 0 ? 'opacity-60 cursor-not-allowed' : ''}`}
-                            disabled={!title || !content || rating === 0}
+                            // Use the combined disabled state
+                            className={`flex-grow bg-[#E7BB41] text-[#2C3E50] text-lg font-body py-2 rounded-md font-bold hover:bg-opacity-90 transition-colors focus:ring-4 focus:ring-[#E7BB41] cursor-pointer focus:ring-offset-2 
+                                ${isFormDisabled ? 'opacity-60 cursor-not-allowed' : ''}
+                                ${isSubmitting ? 'flex items-center justify-center' : ''}`}
+                            disabled={isFormDisabled}
                         >
-                            {isEditing ? 'Update Review' : 'Submit Review'}
+                            {/* Display loading text/spinner */}
+                            {isSubmitting ? (
+                                <>
+                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    {isEditing ? 'Updating...' : 'Submitting...'}
+                                </>
+                            ) : (
+                                isEditing ? 'Update Review' : 'Submit Review'
+                            )}
                         </button>
                         {isEditing && (
                             <button
                                 type="button"
                                 onClick={onCancelEdit}
-                                className="px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
+                                disabled={isSubmitting} // Disable cancel button while submitting
+                                className="px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors cursor-pointer disabled:opacity-50"
                             >
                                 Cancel
                             </button>
