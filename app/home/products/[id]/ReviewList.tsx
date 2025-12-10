@@ -1,10 +1,24 @@
 // app/home/products/[id]/ReviewList.tsx
 
 import StarRating from '@/app/ui/products/star-rating';
-import { Review } from './ReviewsClientWrapper';
+import { Product } from '@/app/lib/definitions'; // <-- ADDED: Import Product for type extension
 
-// Export Review type for usage in other files
-export type { Review };
+// -------------------------------------------------------------------
+// 🔥 FIX: Define and Export the Review type here as the canonical source
+// This resolves the Type error: Module '"./ReviewsClientWrapper"' has no exported member 'Review'
+// -------------------------------------------------------------------
+export interface Review extends Pick<Product, 'id'> {
+    reviewId: number;
+    userId: number; // Mock user ID (e.g., the current user)
+    userName: string;
+    rating: number; // 1-5
+    title: string;
+    content: string;
+    date: Date;
+}
+
+// NOTE: The line 'export type { Review };' is now redundant and can be removed.
+// -------------------------------------------------------------------
 
 interface ReviewListProps {
     reviews: Review[];
@@ -13,7 +27,7 @@ interface ReviewListProps {
     onDeleteClick: (reviewId: number) => void;
 }
 
-// Function to format the date
+// Function to format the date (Unchanged)
 const formatDate = (date: Date) => {
     return date.toLocaleDateString('en-US', {
         year: 'numeric',
@@ -33,7 +47,7 @@ export default function ReviewList({ reviews, currentUserId, onEditClick, onDele
         );
     }
 
-    // Sort reviews to put the current user's review first, then by newest date
+    // Sort reviews to put the current user's review first, then by newest date (Unchanged)
     const sortedReviews = [...reviews].sort((a, b) => {
         if (a.userId === currentUserId) return -1; // Current user's review first
         if (b.userId === currentUserId) return 1;
@@ -88,4 +102,3 @@ export default function ReviewList({ reviews, currentUserId, onEditClick, onDele
         </div>
     );
 }
-
