@@ -74,7 +74,7 @@ export default function MainHeader() {
             <Link
               href="/login"
               aria-label="Account"
-              className="focus:outline-none focus:ring-2 focus:ring-[#7E9F8E] p-2 rounded-md transition hover:bg-gray-100"
+              className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#7E9F8E] p-2 rounded-md transition hover:bg-gray-100"
             >
               <UserIcon />
             </Link>
@@ -85,10 +85,10 @@ export default function MainHeader() {
               <button
                 onClick={toggleMenu}
                 aria-label="User menu"
-                className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-[#7E9F8E] p-2 rounded-md transition hover:bg-gray-100"
+                className="cursor-pointer flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-[#7E9F8E] p-2 rounded-md transition hover:bg-gray-100"
               >
                 <UserIcon />
-                <span className="font-semibold text-[#2C3E50] hidden md:block">
+                <span className="cursor-pointer font-semibold text-[#2C3E50] hidden md:block">
                   {username}
                 </span>
               </button>
@@ -98,7 +98,7 @@ export default function MainHeader() {
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-xl border border-gray-200 p-2 z-50">
                   <Link
                     href="/account"
-                    className="block px-4 py-2 hover:bg-gray-100 rounded-md transition text-[#2C3E50]"
+                    className="cursor-pointer block px-4 py-2 hover:bg-gray-100 rounded-md transition text-[#2C3E50]"
                     onClick={() => setOpenMenu(false)}
                   >
                     My Account
@@ -106,7 +106,7 @@ export default function MainHeader() {
 
                   <Link
                     href="/orders"
-                    className="block px-4 py-2 hover:bg-gray-100 rounded-md transition text-[#2C3E50]"
+                    className="cursor-pointer block px-4 py-2 hover:bg-gray-100 rounded-md transition text-[#2C3E50]"
                     onClick={() => setOpenMenu(false)}
                   >
                     My Orders
@@ -114,7 +114,7 @@ export default function MainHeader() {
 
                   <button
                     onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md text-red-600 transition"
+                    className="cursor-pointer w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md text-red-600 transition"
                   >
                     Log Out
                   </button>
