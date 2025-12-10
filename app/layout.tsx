@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-// Make sure these Geist imports are correct based on your setup (they look correct)
-// Note: Geist is used for both font imports, which suggests a potential typo based on the font definition below.
-// I have assumed 'Geist' corresponds to 'geistSans' and 'Geist_Mono' corresponds to 'geistMono' as defined below.
+// NOTE: Make sure these font imports are correct based on your setup.
 import { Geist, Geist_Mono } from "next/font/google";
 import ScrollToTopButton from "@/app/ui/ScrollToTopButton";
-// import MainHeader from "@/app/ui/home/main-header"; // ⬅ UNCOMMENTED
-// import MainFooter from "@/app/ui/home/main-footer"; // ⬅ UNCOMMENTED
+// import MainHeader from "@/app/ui/home/main-header"; // Header commented out per request
+// import MainFooter from "@/app/ui/home/main-footer"; // Footer commented out per request
 import { CartProvider } from "@/app/context/CartContext";
+import { AuthProvider } from "@/app/context/AuthContext";
 import "./globals.css";
 
-// --- FONT DEFINITIONS MUST BE HERE ---
+// --- FONT DEFINITIONS ---
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,7 +18,7 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-// -------------------------------------
+// ------------------------
 
 export const metadata: Metadata = {
   title: "Handcrafted Haven",
@@ -30,28 +29,30 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
+    // Cleaned up whitespace to fix Hydration Error
     <html lang="en">
       <body
-        // ⬅ ADDED suppressHydrationWarning to fix the cz-shortcut-listen error
         suppressHydrationWarning={true} 
-        // The variables must be defined above this function to be used here
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <CartProvider>
+        
+        <AuthProvider> 
+          <CartProvider>
+            
+            {/* HEADER (Commented out) */}
+            {/* <MainHeader /> */}
+
+            {/* MAIN CONTENT */}
+            <main className="flex-1">{children}</main>
+
+            {/* FOOTER (Commented out) */}
+            {/* <MainFooter /> */}
+
+            {/* SCROLL TO TOP BUTTON */}
+            <ScrollToTopButton />
           
-          {/* HEADER ⬅ UNCOMMENTED */}
-          {/* <MainHeader /> */}
-
-          {/* MAIN CONTENT */}
-          {/* The 'flex-1' class ensures this main section takes up all available vertical space */}
-          <main className="flex-1">{children}</main>
-
-          {/* FOOTER ⬅ UNCOMMENTED */}
-          {/* <MainFooter /> */}
-
-          {/* SCROLL TO TOP BUTTON */}
-          <ScrollToTopButton />
-        </CartProvider>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
